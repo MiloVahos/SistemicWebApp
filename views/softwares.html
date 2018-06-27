@@ -1,0 +1,28 @@
+<!--
+  @Developer: Juan Camilo Peña Vahos
+  @Description: Tabla con softwares
+-->
+
+<div class="panel-margin">
+    <table class="table table-striped">
+        <h3><strong>Software</strong></h3>
+        <thead>
+            <th>Title</th>
+            <th>Comercial Name</th>
+            <th>Availability</th>
+            <th>Institution</th>
+            <th>Year</th>
+            <th>Author</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="software in softwares">
+                <td>{{ software.title }}</td>
+                <td>{{ software.name }}</td>
+                <td>{{ software.availability }}</td>
+                <td>{{ software.institution }}</td>
+                <td>{{ software.year }}</td>
+                <td>{{ software.author }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

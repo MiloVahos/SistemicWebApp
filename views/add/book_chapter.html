@@ -1,0 +1,89 @@
+<!--
+  @Developer: Juan Camilo Peña Vahos
+  @Description: Vista de 'Agregar nuevos capítulos de libros'
+-->
+<div class="panel-margin">
+    <h2>Add new Book Chapter</h2>
+    <hr class="my-4">
+    <form>
+
+      <div class="form-group row">
+        <label for="title" class="col-sm-2 col-form-label">Chapter Title:</label>
+        <div class="col-sm-6">
+          <input name="title" ng-model="bookChapter.Title" class="form-control pull-left" placeholder="Insert the chapter title" required/>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="bookTitle" class="col-sm-2 col-form-label">Book Title:</label>
+        <div class="col-sm-6">
+          <input name="bookTitle" ng-model="bookChapter.TitleBook" class="form-control pull-left" placeholder="Insert the book title" required/>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="pages" class="col-sm-2 col-form-label">Pages:</label>
+        <div class="col-sm-6">
+          <input name="pages" ng-model="bookChapter.Pages" class="form-control pull-left" placeholder="Pages [0-9] - [0-9]" required/>
+        </div>
+      </div>
+        
+      <div class="form-group row">
+        <label for="editorial" class="col-sm-2 col-form-label">Editorial:</label>
+        <div class="col-sm-6">
+          <input name="editorial" ng-model="bookChapter.Editorial" class="form-control pull-left" placeholder="Publisher's Name" required/>
+        </div>
+      </div>
+  
+      <div class="form-group row">
+        <label for="year" class="col-sm-2 col-form-label">Year:</label>
+        <div class="col-sm-6">
+          <input name="year" ng-model="bookChapter.Year" type="number" min="1900" max="{{currentYear}}" class="form-control pull-left" placeholder="Publication Year" required/>
+        </div>
+      </div>
+  
+      <div class="form-group row">
+        <label for="SearchAuthor" class="col-sm-2 col-form-label">Authors:</label>
+        <div class="col-sm-6">
+          <input ng-model="autor" class="form-control pull-left" id="SearchAuthor" type="search" placeholder="Search Author" aria-label="Search">
+          <input type='button' class="btn btn-success pull-down pull-left" value='Add author to list' ng-click="addToList()" />
+        </div>
+      </div>
+  
+      <div class="form-group row">
+        <label for="author" class="col-sm-2 col-form-label">Authors List:</label>
+        <div class="col-sm-6">
+          <ul id='AuthorsList'></ul>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <input type="submit" class="btn btn-primary" ng-click="saveBookChapter()" value="Save"/> 
+        </div>
+      </div>
+
+      <div class="form-group panel-margin" id="success">
+        <div class="alert alert-success">
+          <strong>Success!</strong> Data saved!
+        </div>  
+      </div>
+      <div class="form-group panel-margin" id="danger">
+        <div class="alert alert-danger">
+          <strong>Error!</strong> Something went wrong with the database.
+        </div>
+      </div>
+    
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <p class="Advert-text">If you don't see an author. Please, add a new one here!</p>
+        </div>
+        <div class="col-sm-6">
+          <a class="btn btn-primary" href="#!/addAuthor">New Author</a>
+        </div>
+      </div>
+  
+    </form>
+</div>
+
+

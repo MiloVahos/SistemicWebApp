@@ -1,0 +1,30 @@
+<!--
+  @Developer: Juan Camilo Peña Vahos
+  @Description: Tabla con eventos cientificos
+-->
+
+<div class="panel-margin">
+  <table class="table table-striped">
+    <h3><strong>Conference Article</strong></h3>
+    <thead>
+      <th>Title</th>
+      <th>Conference</th>
+      <th>Pages</th>
+      <th>Url</th>
+      <th>Ambit</th>
+      <th>Year</th>
+      <th>Author</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="conference in conferences">
+        <td>{{ conference.title }}</td>
+        <td>{{ conference.conference }}</td>
+        <td>{{ conference.pages }}</td>
+        <td>{{ conference.link }}</td>
+        <td>{{ conference.ambit }}</td>
+        <td>{{ conference.year }}</td>
+        <td>{{ conference.author }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,26 @@
+<!--
+  @Developer: Juan Camilo Peña Vahos
+  @Description: Tabla con prototipos
+-->
+
+<div class="panel-margin">
+  <table class="table table-striped">
+    <h3><strong>Prototypes</strong></h3>
+    <thead>
+      <th>Title</th>
+      <th>Availability</th>
+      <th>Institution</th>
+      <th>Year</th>
+      <th>Author</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="prototype in prototypes">
+        <td>{{ prototype.title }}</td>
+        <td>{{ prototype.availability }}</td>
+        <td>{{ prototype.institution }}</td>
+        <td>{{ prototype.year }}</td>
+        <td>{{ prototype.author }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

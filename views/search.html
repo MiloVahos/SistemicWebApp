@@ -1,0 +1,173 @@
+<!--
+  @Developer: Juan Camilo Peña Vahos
+  @Description: resultado de busqueda
+-->
+
+<div class="panel-margin">
+    <h2><strong>Search Result</strong></h2>
+        <div id="Book" class="tables-margin" style="display:none">
+            <table class="table table-striped">
+                <h3><strong>Books</strong></h3>
+                <thead>
+                    <th>Title</th>
+                    <th>Editorial</th>
+                    <th>Year</th>
+                    <th>Author</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="book in queryBook">
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.editorial }}</td>
+                        <td>{{ book.year }}</td>
+                        <td>{{ book.author }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="BookChapter" class="tables-margin" style="display:none">
+            <table class="table table-striped">
+                <h3><strong>Book Chapter</strong></h3>
+                <thead>
+                    <th>Chapter Title</th>
+                    <th>Book Title</th>
+                    <th>Pages</th>
+                    <th>Editorial</th>
+                    <th>Year</th>
+                    <th>Author</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="bookChapter in queryBookChapter">
+                        <td>{{ bookChapter.title }}</td>
+                        <td>{{ bookChapter.bookTitle }}</td>
+                        <td>{{ bookChapter.pages }}</td>
+                        <td>{{ bookChapter.editorial }}</td>
+                        <td>{{ bookChapter.year }}</td>
+                        <td>{{ bookChapter.author }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="Prototype" class="tables-margin" style="display:none">
+            <table class="table table-striped">
+                <h3><strong>Prototypes</strong></h3>
+                <thead>
+                    <th>Title</th>
+                    <th>Availability</th>
+                    <th>Institution</th>
+                    <th>Year</th>
+                    <th>Author</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="prototype in queryPrototype">
+                        <td>{{ prototype.title }}</td>
+                        <td>{{ prototype.availability }}</td>
+                        <td>{{ prototype.institution }}</td>
+                        <td>{{ prototype.year }}</td>
+                        <td>{{ prototype.author }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="Software" class="tables-margin" style="display:none">
+            <table class="table table-striped">
+                <h3><strong>Software</strong></h3>
+                <thead>
+                    <th>Title</th>
+                    <th>Comercial Name</th>
+                    <th>Availability</th>
+                    <th>Institution</th>
+                    <th>Year</th>
+                    <th>Author</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="software in querySoftware">
+                        <td>{{ software.title }}</td>
+                        <td>{{ software.name }}</td>
+                        <td>{{ software.availability }}</td>
+                        <td>{{ software.institution }}</td>
+                        <td>{{ software.year }}</td>
+                        <td>{{ software.author }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="Journal" class="tables-margin" style="display:none">
+            <table class="table table-striped">
+                <h3><strong>Journal Articles</strong></h3>
+                <thead>
+                    <th>Title</th>
+                    <th>Journal</th>
+                    <th>Pags</th>
+                    <th>Number</th>
+                    <th>Volume</th>
+                    <th>URL-DOI</th>
+                    <th>Year</th>
+                    <th>Author</th>
+                    <!--<th>Category Colciencias</th>
+                    <th>Category SjR-JcR</th>-->
+                </thead>
+                    <tbody>
+                    <tr ng-repeat="journalArticles in queryJournal">
+                        <td>{{ journalArticles.title }}</td>
+                        <td>{{ journalArticles.journal }}</td>
+                        <td>{{ journalArticles.pages }}</td>
+                        <td>{{ journalArticles.number }}</td>
+                        <td>{{ journalArticles.volume }}</td>
+                        <td>{{ journalArticles.url }}</td>
+                        <td>{{ journalArticles.year }}</td>
+                        <td>{{ journalArticles.author }}</td>
+                        <!--<td>{{ journalArticles.colciencias }}</td>
+                        <td>{{ journalArticles.sjRJcR }}</td>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="Conference" class="tables-margin" style="display:none">
+            <table class="table table-striped">
+                <h3><strong>Conference Articles</strong></h3>
+                <thead>
+                    <th>Title</th>
+                    <th>Conference</th>
+                    <th>Pages</th>
+                    <th>Url</th>
+                    <th>Ambit</th>
+                    <th>Year</th>
+                    <th>Author</th>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="conference in queryConference">
+                      <td>{{ conference.title }}</td>
+                      <td>{{ conference.conference }}</td>
+                      <td>{{ conference.pages }}</td>
+                      <td>{{ conference.link }}</td>
+                      <td>{{ conference.ambit }}</td>
+                      <td>{{ conference.year }}</td>
+                      <td>{{ conference.author }}</td>
+                    </tr>
+                  </tbody>
+            </table>
+        </div>
+        <div id="Thesis" class="tables-margin" style="display:none">
+            <table class="table table-striped">
+                <h3><strong>Thesis</strong></h3>
+                <thead>
+                    <th>Title</th>
+                    <th>Student</th>
+                    <th>Type</th>
+                    <th>University</th>
+                    <th>Year</th>
+                    <th>Tutor</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="thesis in queryThesis">
+                        <td>{{ thesis.title }}</td>
+                        <td>{{ thesis.student }}</td>
+                        <td>{{ thesis.type }}</td>
+                        <td>{{ thesis.university }}</td>
+                        <td>{{ thesis.year }}</td>
+                        <td>{{ thesis.author }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>

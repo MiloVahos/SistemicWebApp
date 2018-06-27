@@ -1,0 +1,67 @@
+<!--
+  @Developer: Juan Camilo Peña Vahos
+  @Description: Vista de 'Agregar nuevo autor'
+-->
+<div class="panel-margin">
+    <h2>Add new author</h2>
+    <hr class="my-4">
+    <form>
+    
+      <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Full Name:</label>
+        <div class="col-sm-6">
+          <input name="name" ng-model="author.Name" class="form-control pull-left" placeholder="Author full name" required/>
+        </div>
+      </div>
+        
+      <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label">Email:</label>
+        <div class="col-sm-6">
+          <input name="email" ng-model="author.Email" class="form-control pull-left" placeholder="Email" required/>
+        </div>
+      </div>
+
+      <div class="form-check">
+        <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" ng-model="author.Active" value="false">
+          Check if author is available at the moment.
+        </label>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label" for="membershipType">Membership:</label>
+        <div class="col-sm-6">
+          <select ng-model="author.MembershipType" class="form-control pull-left" name="membershipType">
+            <option value="Research Assitant">Research Assitant</option>
+            <option value="External Researcher">External Researcher</option>
+            <option value="Professor">Professor</option>
+            <option value="Undergraduate Student">Undergraduate Student</option>
+            <option value="Master Student">Master Student</option>
+            <option value="PhD Student">PhD Student</option>
+          </select>
+        </div>
+      </div>
+  
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <input type="submit" class="btn btn-primary" ng-click="saveAuthor()" value="Save"/>
+        </div>
+      </div>
+
+      <div class="form-group panel-margin" id="success">
+        <div class="alert alert-success">
+            <strong>Success!</strong> Data saved!
+        </div>  
+        </div>
+      <div class="form-group panel-margin" id="danger">
+        <div class="alert alert-danger">
+            <strong>Error!</strong> Something went wrong with the database.
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
+

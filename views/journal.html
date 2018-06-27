@@ -1,0 +1,36 @@
+<!--
+  @Developer: Juan Camilo Peña Vahos
+  @Description: Tabla de artículos de revista
+-->
+
+<div class="panel-margin">
+  <table class="table table-striped">
+    <h4><strong>Journal Articles</strong></h4>
+    <thead>
+      <th>Title</th>
+      <th>Journal</th>
+      <th>Pags</th>
+      <th>Number</th>
+      <th>Volume</th>
+      <th>URL-DOI</th>
+      <th>Year</th>
+      <th>Author</th>
+      <!--<th>Category Colciencias</th>
+      <th>Category SjR-JcR</th>-->
+    </thead>
+    <tbody>
+      <tr ng-repeat="journalArticles in journal_articles">
+        <td>{{ journalArticles.title }}</td>
+        <td>{{ journalArticles.journal }}</td>
+        <td>{{ journalArticles.pages }}</td>
+        <td>{{ journalArticles.number }}</td>
+        <td>{{ journalArticles.volume }}</td>
+        <td>{{ journalArticles.url }}</td>
+        <td>{{ journalArticles.year }}</td>
+        <td>{{ journalArticles.author }}</td>
+        <!--<td>{{ journalArticles.colciencias }}</td>
+        <td>{{ journalArticles.sjRJcR }}</td>-->
+      </tr>
+    </tbody>
+  </table>
+</div>

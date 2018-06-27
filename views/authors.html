@@ -1,0 +1,23 @@
+<!--
+  @Developer: Juan Camilo Peña Vahos
+  @Description: Tabla con todos los autores
+-->
+
+<div class="panel-margin table table-striped">
+    <table class="table table-striped">
+        <h3><strong>Our Team</strong></h3>
+        <thead>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Membership Type</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="author in authors">
+                <td>{{ author.name }}</td>
+                <td>{{ author.email }}</td>
+                <td>{{ author.membershipType }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+      

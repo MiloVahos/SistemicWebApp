@@ -1,0 +1,28 @@
+<!--
+  @Developer: Juan Camilo Peña Vahos
+  @Description: Tabla con los capítulos de libros
+-->
+
+<div class="panel-margin">
+  <table class="table table-striped">
+    <h3><strong>Book Chapter</strong></h3>
+    <thead>
+      <th>Chapter Title</th>
+      <th>Book Title</th>
+      <th>Pages</th>
+      <th>Editorial</th>
+      <th>Year</th>
+      <th>Author</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="bookChapter in book_chapters">
+        <td>{{ bookChapter.title }}</td>
+        <td>{{ bookChapter.bookTitle }}</td>
+        <td>{{ bookChapter.pages }}</td>
+        <td>{{ bookChapter.editorial }}</td>
+        <td>{{ bookChapter.year }}</td>
+        <td>{{ bookChapter.author }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

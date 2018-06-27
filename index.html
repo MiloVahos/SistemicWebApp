@@ -1,0 +1,124 @@
+<!-- @developer:  Juan Camilo Peña Vahos -->
+<!-- @description: Este documento es el punto de acceso del usuario -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <title>Sistemic Database</title>
+        <!--META DATA-->
+        <meta charset='utf-8'>
+        <meta name="description" content="Sistemic Group Database">
+        <!--StyleSheets-->
+        <!--Para ahorrar espacio en archivos se usan CDN's en caso de fallo, descargar archivos y reemplazar-->
+        <link rel="stylesheet" type="text/css" href="styles/styles.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" 
+                               integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" 
+                               crossorigin="anonymous">
+    </head>
+
+    <body ng-app="MainModule" > <!--Bootstraping the angular main module -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#!/">Sistemic Publications</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" 
+                    data-target="#navbarSupportedContent" 
+                    aria-controls="navbarSupportedContent" 
+                    aria-expanded="false" 
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#!/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!/admin">Admin</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" 
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                           Publication Type
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#!/any">Any</a>
+                            <a class="dropdown-item" href="#!/book">Book</a>
+                            <a class="dropdown-item" href="#!/bookChapter">Book Chapter</a>
+                            <a class="dropdown-item" href="#!/journal">Journal Articles</a>
+                            <a class="dropdown-item" href="#!/conference">Conference Articles</a>
+                            <a class="dropdown-item" href="#!/prototype">Prototypes</a>
+                            <a class="dropdown-item" href="#!/software">Software</a>
+                            <div class="dropdown-divider"></div>
+                            <a><b><i>Thesis</b></i></a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#!/thesis/Undergraduated">Undergraduated</a>
+                            <a class="dropdown-item" href="#!/thesis/Master">Master</a>
+                            <a class="dropdown-item" href="#!/thesis/PhD">PhD</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#!/authors">Our Team</a>
+                    </li>
+                </ul>
+                <!--<form class="form-inline my-2 my-lg-0" ng-controller="searchBoxCtrl">
+                    <input class="form-control mr-sm-2" id="searchBox" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" ng-click="search()">Search</button>
+                </form>-->
+            </div>
+        </nav>
+
+        <div class="container" ng-view=""></div>
+
+        <!--FIREBASE SCRIPTS-->
+        <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase-database.js"></script>
+        <script type="text/javascript" src="scripts/firebaseconnection.js"></script>
+
+        <!--SCRIPTS PARA LLAMAR LIBRERÍAS-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script 
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous">
+        </script>
+        <script 
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" 
+            integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" 
+            crossorigin="anonymous">
+        </script>
+        <script 
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" 
+            integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" 
+            crossorigin="anonymous">
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.4/js/all.js"></script>
+
+        <!--Scripts by our team-->
+        <script type="text/javascript" src="scripts/app.js"></script>
+        <script type="text/javascript" src="scripts/controllers/admin.js"></script>
+        <script type="text/javascript" src="scripts/controllers/login.js"></script>
+        <script type="text/javascript" src="scripts/controllers/main.js"></script>
+        <script type="text/javascript" src="scripts/controllers/viewsCtrls/any.js"></script>
+        <script type="text/javascript" src="scripts/controllers/viewsCtrls/book.js"></script>
+        <script type="text/javascript" src="scripts/controllers/viewsCtrls/prototype.js"></script>
+        <script type="text/javascript" src="scripts/controllers/viewsCtrls/software.js"></script>
+        <script type="text/javascript" src="scripts/controllers/viewsCtrls/book_chapters.js"></script>
+        <script type="text/javascript" src="scripts/controllers/viewsCtrls/conference.js"></script>
+        <script type="text/javascript" src="scripts/controllers/viewsCtrls/journal.js"></script>
+        <script type="text/javascript" src="scripts/controllers/viewsCtrls/thesis.js"></script>
+        <script type="text/javascript" src="scripts/controllers/viewsCtrls/author.js"></script>
+        <script type="text/javascript" src="scripts/controllers/bindData.js"></script>
+        <script type="text/javascript" src="scripts/controllers/viewsCtrls/any.js"></script>
+        <script type="text/javascript" src="scripts/controllers/searchbox.js"></script>
+        <script type="text/javascript" src="scripts/controllers/adminCtrls/add.js"></script>
+        <script type="text/javascript" src="scripts/controllers/adminCtrls/update_delete.js"></script>
+    </body>
+
+</html>
+

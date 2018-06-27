@@ -1,0 +1,180 @@
+<!--
+  @Developer: Juan Camilo Peña Vahos
+  @Description: Tabla de any
+-->
+
+<div class="panel-margin">
+    <div class="tables-margin">
+        <table class="table table-striped">
+            <h3><strong>Books</strong></h3>
+            <thead>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Author</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="book in queryBook">
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.year }}</td>
+                    <td>{{ book.author }}</td>
+                    <!--td>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm" ng-click="updateBook()"><i class="fas fa-pencil-alt fa-lg"></i></button>
+                            </span>
+                        </div>
+                    </td-->
+                    <td >
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm" ng-click="queryBook.$remove(book)"><i class="fas fa-trash fa-lg"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tables-margin">
+        <table class="table table-striped">
+            <h3><strong>Book Chapter</strong></h3>
+            <thead>
+                <th>Chapter Title</th>
+                <th>Year</th>
+                <th>Author</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="bookChapter in queryBookChapter">
+                    <td>{{ bookChapter.title }}</td>
+                    <td>{{ bookChapter.year }}</td>
+                    <td>{{ bookChapter.author }}</td>
+                    <td >
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm" ng-click="queryBookChapter.$remove(bookChapter)"><i class="fas fa-trash fa-lg"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tables-margin">
+        <table class="table table-striped">
+            <h3><strong>Prototypes</strong></h3>
+            <thead>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Author</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="prototype in queryPrototype">
+                    <td>{{ prototype.title }}</td>
+                    <td>{{ prototype.year }}</td>
+                    <td>{{ prototype.author }}</td>
+                    <td >
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm" ng-click="queryPrototype.$remove(prototype)"><i class="fas fa-trash fa-lg"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tables-margin">
+        <table class="table table-striped">
+            <h3><strong>Software</strong></h3>
+            <thead>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Author</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="software in querySoftware">
+                    <td>{{ software.title }}</td>
+                    <td>{{ software.year }}</td>
+                    <td>{{ software.author }}</td>
+                    <td >
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm" ng-click="querySoftware.$remove(software)"><i class="fas fa-trash fa-lg"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tables-margin">
+        <table class="table table-striped">
+            <h3><strong>Journal Articles</strong></h3>
+            <thead>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Author</th>
+            </thead>
+                <tbody>
+                <tr ng-repeat="journal in queryJournal">
+                    <td>{{ journal.title }}</td>
+                    <td>{{ journal.year }}</td>
+                    <td>{{ journal.author }}</td>
+                    <td >
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm" ng-click="queryJournal.$remove(journal)"><i class="fas fa-trash fa-lg"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tables-margin">
+        <table class="table table-striped">
+            <h3><strong>Scientific Events</strong></h3>
+            <thead>
+                <th>Title</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="event in queryEvents">
+                    <td>{{ event.title }}</td>
+                    <td >
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm" ng-click="queryEvents.$remove(event)"><i class="fas fa-trash fa-lg"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tables-margin">
+        <table class="table table-striped">
+            <h3><strong>Thesis</strong></h3>
+            <thead>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Tutor</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="thesis in queryThesis">
+                    <td>{{ thesis.title }}</td>
+                    <td>{{ thesis.year }}</td>
+                    <td>{{ thesis.author }}</td>
+                    <td >
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm" ng-click="queryThesis.$remove(thesis)"><i class="fas fa-trash fa-lg"></i></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

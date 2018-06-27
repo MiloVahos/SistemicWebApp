@@ -1,0 +1,16 @@
+<!-- @developer:  Juan Camilo Peña Vahos -->
+<!-- @Description: Vista de la ventana de loggin -->
+
+<div class="container text-center login-inputs">
+    <div class="wrapper">
+        <form class="form-signin"> 
+            <h3 class="form-signin-heading">Please! Sign in</h3>
+
+            <input type="email" name="email" ng-model="user.Email" class="form-control login-inputs" placeholder="Email" required autofocus/>
+            <input type="password" name="password" ng-model="user.Password" class="form-control login-inputs" placeholder="Password" required/>		  
+                 
+            <button class="btn btn-lg btn-primary btn-block login-inputs"  ng-click="login()" name="Submit" value="Login" type="Submit">Login</button>  			
+        </form>			
+    </div>
+    <div class="alert alert-danger panel-margin" role="alert"></div>
+</div>

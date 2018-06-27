@@ -1,0 +1,128 @@
+<!--
+  @Developer: Juan Camilo Peña Vahos
+  @Description: Vista de 'Agregar nuevo artículo de revista'
+-->
+<div class="panel-margin">
+  <h2>Add new Journal Article</h2>
+  <hr class="my-4">
+  <form>
+
+    <div class="form-group row">
+      <label for="title" class="col-sm-2 col-form-label">Title:</label>
+      <div class="col-sm-6">
+        <input name="title" ng-model="journal.Title" class="form-control pull-left" placeholder="Insert the article's title" required/>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="journal" class="col-sm-2 col-form-label">Journal:</label>
+      <div class="col-sm-6">
+        <input name="journal" ng-model="journal.Journal" class="form-control pull-left" placeholder="Journal's name" required/>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="number" class="col-sm-2 col-form-label">Number:</label>
+      <div class="col-sm-6">
+        <input name="number" ng-model="journal.Number" class="form-control pull-left" placeholder="Journal Number ISSN: [0-9] - [0-9]" required/>
+      </div>
+    </div>
+    
+    <div class="form-group row">
+      <label for="volume" class="col-sm-2 col-form-label">Volume:</label>
+      <div class="col-sm-6">
+        <input name="volume" ng-model="journal.Volume" class="form-control pull-left" placeholder="Journal's Volume" required/>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="pages" class="col-sm-2 col-form-label">Pages:</label>
+      <div class="col-sm-6">
+        <input name="pages" ng-model="journal.Pages" class="form-control pull-left" placeholder="Article pages [0-9] - [0-9]" required/>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="link" class="col-sm-2 col-form-label">URL:</label>
+      <div class="col-sm-6">
+        <input name="link" ng-model="journal.Link" class="form-control pull-left" placeholder="Article URL - DOI" required/>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="control-label col-sm-2" for="CategoryColciencias">Colciencia Category:</label>
+      <div class="col-sm-6">
+        <select ng-model="journal.CategoryColciencias" class="form-control pull-left" name="CategoryColciencias">
+            <option value="A1">A1</option>
+            <option value="A2">A2</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="Sin Categoria">Without Category</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="control-label col-sm-2" for="CategoryJcr">SjR Category:</label>
+      <div class="col-sm-6">
+        <select ng-model="journal.CategoryJcr" class="form-control pull-left" name="CategoryJcr">
+            <option value="Q1">Q1</option>
+            <option value="Q2">Q2</option>
+            <option value="Q3">Q3</option>
+            <option value="Q4">Q4</option>
+            <option value="Sin Categoria">Without Category</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="year" class="col-sm-2 col-form-label">Year:</label>
+      <div class="col-sm-6">
+          <input name="year" ng-model="journal.Year" type="number" min="1900" max="{{currentYear}}" class="form-control pull-left" placeholder="Publication Year" required/>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="SearchAuthor" class="col-sm-2 col-form-label">Authors:</label>
+      <div class="col-sm-6">
+        <input ng-model="autor" class="form-control pull-left" id="SearchAuthor" type="search" placeholder="Search Author" aria-label="Search">
+        <input type='button' class="btn btn-success pull-down pull-left" value='Add author to list' ng-click="addToList()" />
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="author" class="col-sm-2 col-form-label">Authors List:</label>
+      <div class="col-sm-6">
+        <ul id='AuthorsList'></ul>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <input type="submit" class="btn btn-primary" ng-click="saveJournal()" value="Save"/> 
+      </div>
+    </div>
+
+    <div class="form-group panel-margin" id="success">
+      <div class="alert alert-success">
+        <strong>Success!</strong> Data saved!
+      </div>  
+    </div>
+    <div class="form-group panel-margin" id="danger">
+      <div class="alert alert-danger">
+        <strong>Error!</strong> Something went wrong with the database.
+      </div>
+    </div>
+    
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <p class="Advert-text">If you don't see an author. Please, add a new one here!</p>
+      </div>
+      <div class="col-sm-6">
+        <a class="btn btn-primary" href="#!/addAuthor">New Author</a>
+      </div>
+    </div>
+
+  </form>
+</div>
+
