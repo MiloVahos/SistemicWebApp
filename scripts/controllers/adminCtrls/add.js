@@ -1,17 +1,49 @@
-/**
- *@author: Juan Camilo Peña Vahos
+/** 
+ *@author:      Juan Camilo Peña Vahos
  *@description: Este controlador se encarga de los create de la aplicación
+ *@lastRevised: 10/07/2018
+ * 
+ * CONVENCIONES EN ESTE DOCUMENTO
+ *      =>LAS COLECCIONES LAS LLAMO EN MAYÚSCULAS
+ *      =>LOS DOCUMENTOS CON LA PRIMERA LETRA EN MAYÚSCULA
+ *      =>LOS DATOS TIENEN LA LLAVE ('KEY') EN MINÚSCULA
  */
 'use strict';
 
-app.controller('addCtrl', function addController($scope, $window, $firebaseArray, $timeout) {  
+app.controller('addCtrl', function addController($scope, $window) {  
 
-   //Declaración de variables
-   var keys = [];
-   var ListaAutores = []; //Lista que se llena al subir un documento
-   var AuthorsList = []; //Lista con todos los autores
+  //Objetos de la base de datos
+  var db              = firebase.firestore();
 
-  //AuthStateListener -> Su función es detectar si el usuario esta loggeado
+  //Definición de referencias
+  var AuthorsRef            = db.collection('AUTHORS'); 
+  var BooksRef              = db.collection('BOOKS');
+  var ChaptersRef           = db.collection('CHAPTERS');
+  var JournalsRef           = db.collection('JOURNALS');
+  var ConferencesRef        = db.collection('CONFERENCES');
+  var PrototypesRef         = db.collection('PROTOTYPES');
+  var SoftwareRef           = db.collection('SOFTWARE');
+  var ThesisRef             = db.collection('THESIS');
+  
+  //Declaración de variables
+  var keys                  = [];
+  var ListaAutores          = [];    //Lista que se llena al subir un documento
+  var AuthorsList           = [];    //Lista con todos los autores
+
+  
+  //DEFINICIÓN DE OBJETOS DEL SCOPE
+  $scope.currentYear        = new Date().getFullYear();
+  $scope.author             = {}; 
+  $scope.bookChapter        = {};
+  $scope.book               = {};
+  $scope.journal            = {};
+  $scope.proto              = {};
+  $scope.software           = {};
+  $scope.conference         = {};
+  $scope.thesis             = {};
+  $scope.author['Active']   = false;
+
+  //AuthStateListener: Su función es detectar si el usuario esta loggeado
   firebase.auth().onAuthStateChanged(function(user) {
     if (!user) {
         $window.location.href = '#!/login';
@@ -19,28 +51,14 @@ app.controller('addCtrl', function addController($scope, $window, $firebaseArray
   });
 
   //FUNCIONES DE FIREBASE
-  var refAutores = firebase.database().ref('Autores');
-  var temp = $firebaseArray(refAutores);
-  temp.$loaded().then(function(data){
-    angular.forEach(temp,function(data){
-      $timeout(function(){
-        AuthorsList.push(data.name);
-      });
+  //CON ESTA FUNCIÓN SE OBTIENEN TODOS LOS AUTORES PARA PODER LLENAR EL AUTOCOMPLETE DE AUTORES
+  AuthorsRef.get().then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+      AuthorsList.push(doc.data().name);
     });
   });
 
-  //Definición de variables del scope
-  $scope.currentYear = new Date().getFullYear();
-  $scope.author = {}; 
-  $scope.bookChapter = {};
-  $scope.book = {};
-  $scope.journal = {};
-  $scope.proto = {};
-  $scope.software = {};
-  $scope.conference = {};
-  $scope.thesis = {};
-  $scope.author['Active'] = false;
-  //Preparación de la interfaz
+  //PREPARACIÓN DE LA INTERFAZ
   $("#success").hide();
   $("#danger").hide();
 
@@ -56,7 +74,7 @@ app.controller('addCtrl', function addController($scope, $window, $firebaseArray
     $("#AuthorsList").append(li);
   }
 
-  //FUNCIONES JAVASCRIPT
+  //messages: Controla el mensaje que se despliega cuando se suben datos
   function messages(error){
     if (error) {
       $("#danger").fadeTo(2000, 500).slideUp(500, function(){
@@ -74,13 +92,15 @@ app.controller('addCtrl', function addController($scope, $window, $firebaseArray
   //**************************************************************************************/
   //Función para agregar autores
   $scope.saveAuthor = function (){
-    firebase.database().ref('Autores').child($scope.author['Name']).set({
-      name: $scope.author['Name'],
-      membershipType: $scope.author['MembershipType'],
-      email: $scope.author['Email'],
-      active: $scope.author['Active'] //Este parámetro esta inicializado en false;
-    }, function(error) {
-      messages(error);
+    AuthorsRef.doc($scope.author['Name']).set({
+      name:       $scope.author['Name'],
+      membership: $scope.author['MembershipType'],
+      email:      $scope.author['Email'],
+      active:     $scope.author['Active']
+    }).then(function(docRef) {
+      messages(false)
+    }).catch(function(error) {
+      message(true)
     });
   }
   //**************************************************************************************/
@@ -89,22 +109,26 @@ app.controller('addCtrl', function addController($scope, $window, $firebaseArray
   //Función para agregar libros
   $scope.saveBook = function(){
     var autores = ListaAutores.toString();
-    firebase.database().ref('Documentos').child('Book').push({
-      title: $scope.book['Title'],
-      editorial: $scope.book['Editorial'],
-      year: $scope.book['Year'].toString(),
-      author: autores
-    }, function(error) {
-      messages(error);
-    }).then((snap) => {
-      var key = snap.key;
-      for(var i=0; i<ListaAutores.length; i++){
-        var autor = ListaAutores[i];
-        firebase.database().ref('AutoresQuery').child(autor).child("Book").push({
-          document: key
+    BooksRef.add({
+      title:      $scope.book['Title'],
+      editorial:  $scope.book['Editorial'],
+      year:       $scope.book['Year'].toString(),
+      author:     autores
+    })
+    .then(function(docRef) {
+      for(var i = 0;  i < ListaAutores.length;  i++){
+        var author  = ListaAutores[i];
+        AuthorsRef.doc(author).collection('BOOKS').add({
+          title:      $scope.book['Title'],
+          editorial:  $scope.book['Editorial'],
+          year:       $scope.book['Year'].toString(),
+          author:     autores
         });
       }
-      ListaAutores = [];
+      messages(false);
+      ListaAutores  = [];
+    }).catch(function(error) {
+      messages(true);
     });
   }
   /****************************************************************************************/
@@ -113,24 +137,30 @@ app.controller('addCtrl', function addController($scope, $window, $firebaseArray
   //Función para agregar capítulos de libros
   $scope.saveBookChapter = function(){
     var autores = ListaAutores.toString();
-    firebase.database().ref('Documentos').child('BookChapter').push({
-      title: $scope.bookChapter['Title'],
-      bookTitle: $scope.bookChapter['TitleBook'],
-      pages: $scope.bookChapter['Pages'].toString(),
-      editorial: $scope.bookChapter['Editorial'],
-      year: $scope.bookChapter['Year'].toString(),
-      author: autores
-    },function(error) {
-      messages(error);
-    }).then((snap) => {
-      var key = snap.key;
-      for(var i=0; i<ListaAutores.length; i++){
-        var autor = ListaAutores[i];
-        firebase.database().ref('AutoresQuery').child(autor).child("BookChapter").push({
-          document: key
+    ChaptersRef.add({
+      title:        $scope.bookChapter['Title'],
+      bookTitle:    $scope.bookChapter['TitleBook'],
+      pages:        $scope.bookChapter['Pages'].toString(),
+      editorial:    $scope.bookChapter['Editorial'],
+      year:         $scope.bookChapter['Year'].toString(),
+      author:       autores
+    })
+    .then(function(docRef) {
+      for(var i = 0;  i < ListaAutores.length;  i++){
+        var author  = ListaAutores[i];
+        AuthorsRef.doc(author).collection('CHAPTERS').add({
+          title:        $scope.bookChapter['Title'],
+          bookTitle:    $scope.bookChapter['TitleBook'],
+          pages:        $scope.bookChapter['Pages'].toString(),
+          editorial:    $scope.bookChapter['Editorial'],
+          year:         $scope.bookChapter['Year'].toString(),
+          author:       autores
         });
       }
-      ListaAutores = [];
+      messages(false);
+      ListaAutores  = [];
+    }).catch(function(error) {
+      messages(true);
     });
   }
   /****************************************************************************************/
@@ -139,52 +169,102 @@ app.controller('addCtrl', function addController($scope, $window, $firebaseArray
   //Función para agregar Journal Articles
   $scope.saveJournal = function(){
     var autores = ListaAutores.toString();
-    firebase.database().ref('Documentos').child('Journal').push({
-      title: $scope.journal['Title'],
-      journal: $scope.journal['Journal'],
-      number: $scope.journal['Number'],
-      volume: $scope.journal['Volume'],
-      pages: $scope.journal['Pages'],
-      url: $scope.journal['Link'],
-      year: $scope.journal['Year'].toString(),
-      colciencias: $scope.journal['CategoryColciencias'],
-      sjRJcR: $scope.journal['CategoryJcr'],
-      author: autores
-    }, function(error) {
-      messages(error);
-    }).then((snap) => {
-      var key = snap.key;
-      for(var i=0; i<ListaAutores.length; i++){
-        var autor = ListaAutores[i];
-        firebase.database().ref('AutoresQuery').child(autor).child("Journal").push({
-          document: key
+    JournalsRef.add({
+      title:        $scope.journal['Title'],
+      journal:      $scope.journal['Journal'],
+      number:       $scope.journal['Number'],
+      volume:       $scope.journal['Volume'],
+      pages:        $scope.journal['Pages'],
+      url:          $scope.journal['Link'],
+      year:         $scope.journal['Year'].toString(),
+      colciencias:  $scope.journal['CategoryColciencias'],
+      sjRJcR:       $scope.journal['CategoryJcr'],
+      author:       autores
+    })
+    .then(function(docRef) {
+      for(var i = 0;  i < ListaAutores.length;  i++){
+        var author  = ListaAutores[i];
+        AuthorsRef.doc(author).collection('JOURNALS').add({
+          title:        $scope.journal['Title'],
+          journal:      $scope.journal['Journal'],
+          number:       $scope.journal['Number'],
+          volume:       $scope.journal['Volume'],
+          pages:        $scope.journal['Pages'],
+          url:          $scope.journal['Link'],
+          year:         $scope.journal['Year'].toString(),
+          colciencias:  $scope.journal['CategoryColciencias'],
+          sjRJcR:       $scope.journal['CategoryJcr'],
+          author:       autores
         });
       }
-      ListaAutores = [];
+      messages(false);
+      ListaAutores  = [];
+    }).catch(function(error) {
+      messages(true);
     });
   }
   /****************************************************************************************/
+
+  /****************************************************************************************/
+  //Función para agregar eventos científicos
+  $scope.saveConference = function(){
+    var autores = ListaAutores.toString();
+    ConferencesRef.add({
+      title:        $scope.conference['Title'],
+      conference:   $scope.conference['Conference'],
+      pages:        $scope.conference['Pages'],
+      url:          $scope.conference['Link'],
+      year:         $scope.conference['Year'].toString(),
+      ambit:        $scope.conference['Ambit'],
+      author:       autores
+    })
+    .then(function(docRef) {
+      for(var i = 0;  i < ListaAutores.length;  i++){
+        var author  = ListaAutores[i];
+        AuthorsRef.doc(author).collection('CONFERENCES').add({
+          title:        $scope.conference['Title'],
+          conference:   $scope.conference['Conference'],
+          pages:        $scope.conference['Pages'],
+          url:          $scope.conference['Link'],
+          year:         $scope.conference['Year'].toString(),
+          ambit:        $scope.conference['Ambit'],
+          author:       autores
+        });
+      }
+      messages(false);
+      ListaAutores  = [];
+    }).catch(function(error) {
+      messages(true);
+    });
+  }
+  /****************************************************************************************/
+
   /****************************************************************************************/
   //Función para agregar prototipos
   $scope.savePrototype = function(){
     var autores = ListaAutores.toString();
-    firebase.database().ref('Documentos').child('Prototype').push({
-      title: $scope.proto['Title'],
-      availability: $scope.proto['Availability'],
-      institution: $scope.proto['Institution'],
-      year: $scope.proto['Year'].toString(),
-      author: autores
-    },function(error) {
-      messages(error);
-    }).then((snap) => {
-      var key = snap.key;
-      for(var i=0; i<ListaAutores.length; i++){
-        var autor = ListaAutores[i];
-        firebase.database().ref('AutoresQuery').child(autor).child("Prototype").push({
-          document: key
+    PrototypesRef.add({
+      title:          $scope.proto['Title'],
+      availability:   $scope.proto['Availability'],
+      institution:    $scope.proto['Institution'],
+      year:           $scope.proto['Year'].toString(),
+      author:         autores
+    })
+    .then(function(docRef) {
+      for(var i = 0;  i < ListaAutores.length;  i++){
+        var author  = ListaAutores[i];
+        AuthorsRef.doc(author).collection('PROTOTYPES').add({
+          title:          $scope.proto['Title'],
+          availability:   $scope.proto['Availability'],
+          institution:    $scope.proto['Institution'],
+          year:           $scope.proto['Year'].toString(),
+          author:         autores
         });
       }
-      ListaAutores = [];
+      messages(false);
+      ListaAutores  = [];
+    }).catch(function(error) {
+      messages(true);
     });
   }
   /****************************************************************************************/
@@ -193,24 +273,30 @@ app.controller('addCtrl', function addController($scope, $window, $firebaseArray
   //Función para agregar softwares
   $scope.saveSoftware = function(){
     var autores = ListaAutores.toString();
-    firebase.database().ref('Documentos').child('Software').push({
-      title: $scope.software['Title'],
-      name: $scope.software['Name'],
-      availability: $scope.software['Availability'],
-      institution: $scope.software['Institution'],
-      year: $scope.software['Year'].toString(),
-      author: autores
-    },function(error) {
-      messages(error);
-    }).then((snap) => {
-      var key = snap.key;
-      for(var i=0; i<ListaAutores.length; i++){
-        var autor = ListaAutores[i];
-        firebase.database().ref('AutoresQuery').child(autor).child("Software").push({
-          document: key
+    SoftwareRef.add({
+      title:          $scope.software['Title'],
+      name:           $scope.software['Name'],
+      availability:   $scope.software['Availability'],
+      institution:    $scope.software['Institution'],
+      year:           $scope.software['Year'].toString(),
+      author:         autores
+    })
+    .then(function(docRef) {
+      for(var i = 0;  i < ListaAutores.length;  i++){
+        var author  = ListaAutores[i];
+        AuthorsRef.doc(author).collection('SOFTWARE').add({
+          title:          $scope.software['Title'],
+          name:           $scope.software['Name'],
+          availability:   $scope.software['Availability'],
+          institution:    $scope.software['Institution'],
+          year:           $scope.software['Year'].toString(),
+          author:         autores
         });
       }
-      ListaAutores = [];
+      messages(false);
+      ListaAutores  = [];
+    }).catch(function(error) {
+      messages(true);
     });
   }
   /****************************************************************************************/
@@ -219,54 +305,31 @@ app.controller('addCtrl', function addController($scope, $window, $firebaseArray
   //Función para agregar tesis de grado
   $scope.saveThesis = function(){
     var autores = ListaAutores.toString();
-    firebase.database().ref('Documentos').child('Thesis').push({
-      title: $scope.thesis['Title'],
-      student: $scope.thesis['Student'],
-      type: $scope.thesis['Type'],
-      university: $scope.thesis['University'],
-      year: $scope.thesis['Year'].toString(),
-      author: autores
-    },function(error) {
-      messages(error);
-    }).then((snap) => {
-      var key = snap.key;
-      for(var i=0; i<ListaAutores.length; i++){
-        var autor = ListaAutores[i];
-        firebase.database().ref('AutoresQuery').child(autor).child("Thesis").push({
-          document: key
+    ThesisRef.add({
+      title:        $scope.thesis['Title'],
+      student:      $scope.thesis['Student'],
+      type:         $scope.thesis['Type'],
+      university:   $scope.thesis['University'],
+      year:         $scope.thesis['Year'].toString(),
+      author:       autores
+    })
+    .then(function(docRef) {
+      for(var i = 0;  i < ListaAutores.length;  i++){
+        var author  = ListaAutores[i];
+        AuthorsRef.doc(author).collection('THESIS').add({
+          title:        $scope.thesis['Title'],
+          student:      $scope.thesis['Student'],
+          type:         $scope.thesis['Type'],
+          university:   $scope.thesis['University'],
+          year:         $scope.thesis['Year'].toString(),
+          author:       autores
         });
       }
-      ListaAutores = [];
+      messages(false);
+      ListaAutores  = [];
+    }).catch(function(error) {
+      messages(true);
     });
   }
-  /****************************************************************************************/
-
-
-  /****************************************************************************************/
-  //Función para agregar eventos científicos
-  $scope.saveConference = function(){
-    var autores = ListaAutores.toString();
-    firebase.database().ref('Documentos').child('Conference').push({
-      title: $scope.conference['Title'],
-      conference: $scope.conference['Conference'],
-      pages: $scope.conference['Pages'],
-      url: $scope.conference['Link'],
-      year: $scope.conference['Year'].toString(),
-      ambit: $scope.conference['Ambit'],
-      author: autores
-    },function(error) {
-      messages(error);
-    }).then((snap) => {
-      var key = snap.key;
-      for(var i=0; i<ListaAutores.length; i++){
-        var autor = ListaAutores[i];
-        firebase.database().ref('AutoresQuery').child(autor).child("Conference").push({
-          document: key
-        });
-      }
-      ListaAutores = [];
-    });
-  } 
-  /****************************************************************************************/
-  
+  /****************************************************************************************/  
 });

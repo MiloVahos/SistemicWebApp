@@ -1,7 +1,7 @@
 /**
  *@author: Juan Camilo Peña Vahos
  *@description: Este documento contienen los datos para configura y conectar con firebase
- *@date: 26/03/2018
+ *@lastRevised: 10/07/2018
  */
   var config = {
     apiKey: "AIzaSyCybQwf1C08HhkLKoWMfOJT-Ncd8BK3Daw",

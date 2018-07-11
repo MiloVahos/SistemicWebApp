@@ -1,12 +1,12 @@
 /**
- *@author: Juan Camilo Peña Vahos
+ *@author:      Juan Camilo Peña Vahos
  *@description: Este documento las principales funciones de firebase y angular
- *@date: 11/06/2017
+ *@date:        10/07/2018
  */
 
 'use strict';
 
-var app = angular.module('MainModule',['ngRoute','firebase']);//app variable that contains the module
+var app = angular.module('MainModule',['ngRoute','firebase']);
 
 app.config(function($routeProvider) {
     $routeProvider
@@ -58,35 +58,36 @@ app.config(function($routeProvider) {
         templateUrl: 'views/thesis.html',
         controller: 'thesisCtrl'
       })
-      .when('/addBook', { //Rutas para agregar del administrador //Listo
+      //RUTAS PARA EL ADD DEL ADMINISTRADOR
+      .when('/addBook', { //Rutas para agregar del administrador
         templateUrl:'views/add/book.html',
         controller: 'addCtrl'
       })
-      .when('/addBookChapter', { //Listo
+      .when('/addBookChapter', {
         templateUrl:'views/add/book_chapter.html',
         controller: 'addCtrl'
       })
-      .when('/addJournal', {//Listo
+      .when('/addJournal', {
         templateUrl:'views/add/journal.html',
         controller: 'addCtrl'
       })
-      .when('/addPrototype', {//Listo
+      .when('/addPrototype', {
         templateUrl:'views/add/prototype.html',
         controller: 'addCtrl'
       })
-      .when('/addSoftware', {//Listo
+      .when('/addSoftware', {
         templateUrl:'views/add/software.html',
         controller: 'addCtrl'
       })
-      .when('/addConference', {//Listo
+      .when('/addConference', {
         templateUrl:'views/add/conference.html',
         controller: 'addCtrl'
       })
-      .when('/addThesis', { //Listo
+      .when('/addThesis', { 
         templateUrl:'views/add/thesis.html',
         controller: 'addCtrl'
       })
-      .when('/addAuthor',{ //Listo
+      .when('/addAuthor',{ 
         templateUrl:'views/add/author.html',
         controller: 'addCtrl'
       })
